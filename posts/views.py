@@ -10,9 +10,9 @@ from .models import Post
 def post_create(request):
     return HttpResponse("<h1>Create</h1>")
 
-def post_detail(request):
+def post_detail(request, id=None):
     # return HttpResponse("<h1>Detail</h1>")
-    instance = get_object_or_404(Post, title="title")
+    instance = get_object_or_404(Post, id=id)
     context = {
         "title" : instance.title,
         "instance" : instance
