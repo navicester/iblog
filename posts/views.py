@@ -18,5 +18,5 @@ def post_delete(request):
     return HttpResponse("<h1>Delete</h1>")
 
 def post_list(request):
-    return HttpResponse("<h1>List</h1>")     
-          
+    # return HttpResponse("<h1>List</h1>")     
+    return render(request, "index.html", {})       
