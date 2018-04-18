@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Post
 from .forms import PostForm
@@ -14,25 +14,40 @@ def post_create(request):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        return HttpResponseRedirect(instance.get_absolute_url())
 
     context = {
         'form':form
     }
 
-    return render(request, 'post_create.html', context)
+    return render(request, 'post_form.html', context)
 
 def post_detail(request, id=None):
     # return HttpResponse("<h1>Detail</h1>")
     instance = get_object_or_404(Post, id=id)
-    print id
     context = {
         "title" : instance.title,
         "instance" : instance
     }
     return render(request, "post_detail.html",context)   
 
-def post_update(request):
-    return HttpResponse("<h1>Update</h1>")
+def post_update(request, id=None):
+    # return HttpResponse("<h1>Update</h1>")
+    instance = get_object_or_404(Post, id=id)    
+    form = PostForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        return HttpResponseRedirect(instance.get_absolute_url())
+
+    context = {
+        'form':form,
+        "title" : instance.title,
+        "instance" : instance
+    }
+
+    return render(request, 'post_form.html', context)
+
 
 def post_delete(request):
     return HttpResponse("<h1>Delete</h1>")
