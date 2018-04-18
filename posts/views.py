@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages 
 
 from .models import Post
 from .forms import PostForm
@@ -14,7 +15,10 @@ def post_create(request):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        messages.success(request, "successfully created")
         return HttpResponseRedirect(instance.get_absolute_url())
+    else:
+        messages.error(request, "not successfully created")
 
     context = {
         'form':form
@@ -38,6 +42,7 @@ def post_update(request, id=None):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        messages.success(request, "<a href='# '>item</a> saved", extra_tags="html_safe")
         return HttpResponseRedirect(instance.get_absolute_url())
 
     context = {
