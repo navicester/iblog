@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib import messages 
+from django.utils import timezone
 from urllib import quote_plus
 
 from .models import Post
@@ -38,6 +39,10 @@ def post_create(request):
 def post_detail(request, slug=None):
     # return HttpResponse("<h1>Detail</h1>")
     instance = get_object_or_404(Post, slug=slug)
+    if instance.draft or instance.publish > timezone.now().date():
+        if not request.user.is_staff or not request.user.is_superuser:
+            raise Http404
+
     share_string = quote_plus(instance.content)
     context = {
         "title" : instance.title,
@@ -93,7 +98,9 @@ def post_list(request):
     #         "title" : "list"
     #     }
 
-    queryset_list = Post.objects.all()
+    queryset_list = Post.objects.active()
+    if request.user.is_staff or request.user.is_superuser:
+        queryset_list = Post.objects.all()
 
     paginator = Paginator(queryset_list, 2)
 
@@ -112,6 +119,7 @@ def post_list(request):
         'object_list': queryset,
         'title': 'List',
         'page_var' : page_var,
+        'today': timezone.now().date()
     }
 
     return render(request, "post_list.html",context)      
