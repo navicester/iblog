@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+
+{% extends "base.html" %}
+
+{% block content %}
+    {{ block.super }}
     <h1>{{title}} is working!</h1>
     {% for object in object_list %}
         <a href="{{ object.get_absolute_url }}">{{object.title}}</a><br>
         {{object.id}}<br>
     {% endfor %}
-</body>
-</html>
+{% endblock content %}
