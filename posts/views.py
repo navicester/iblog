@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages 
+from urllib import quote_plus
 
 from .models import Post
 from .forms import PostForm
@@ -29,9 +30,11 @@ def post_create(request):
 def post_detail(request, slug=None):
     # return HttpResponse("<h1>Detail</h1>")
     instance = get_object_or_404(Post, slug=slug)
+    share_string = quote_plus(instance.content)
     context = {
         "title" : instance.title,
-        "instance" : instance
+        "instance" : instance,
+        "share_string":share_string
     }
     return render(request, "post_detail.html",context)   
 
