@@ -1,5 +1,6 @@
-
 {% extends "base.html" %}
+
+{% load urlify %}
 
 {% block head_title %}{{instance.title}} | {{block.super}}{% endblock %}
 
@@ -19,7 +20,7 @@ h1{
         {% endif %}
         <h1>{{title}} <small>{{instance.timestamp}}</small></h1>
 
-        <a href="http://v.t.sina.com.cn/share/share.php?title={{share_string}}%20&url={{ request.build_absolute_url }}" target="_blank">
+        <a href="http://v.t.sina.com.cn/share/share.php?title={{instance.content|truncatechars:80|urlify}}%20&url={{ request.build_absolute_url }}" target="_blank">
             share on weibo<i class="fa fa-weibo fa-4x" aria-hidden="true"></i></a>
 
 
