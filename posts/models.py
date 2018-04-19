@@ -7,6 +7,8 @@ from django.db.models.signals import pre_save
 from django.utils.text import slugify
 from django.conf import settings
 from django.utils import timezone
+from markdown_deux import markdown
+from django.utils.safestring import mark_safe
 
 
 def upload_location(instance, filename):
@@ -42,6 +44,11 @@ class Post(models.Model):
     def get_absolute_url(self):
         # return "/posts/%s" % (self.id )
         return reverse("posts:detail", kwargs={"slug":self.slug})
+
+    def get_markdown(self):
+        content = self.content
+        markdown_content = markdown(content)
+        return mark_safe(markdown_content)
 
 def create_slug(instance, new_slug=None):
     slug = slugify(instance.title)
