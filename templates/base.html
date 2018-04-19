@@ -17,6 +17,10 @@
     <style type="text/css">
         {% block style %}{% endblock %}
     </style>
+
+    {% block head_extra %}
+    {% endblock %}
+
 </head>
 <body>
     {% include "message_display.html" %}

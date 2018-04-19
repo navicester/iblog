@@ -23,7 +23,7 @@
                     {% if object.user.get_full_name %}
                     <p>Autho: {{object.user.get_full_name}}</p>
                     {% endif %}
-                    <p>{{object.content|linebreaks|truncatechars:120}}</p>
+                    <p class="content-markdown">{{object.content|truncatechars:120}}</p>
                     <p><a href="{{ object.get_absolute_url }}" class="btn btn-default" role="button">View</a></p>
                   </div>
                 </div>
