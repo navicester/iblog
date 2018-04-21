@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'pagedown',
     'crispy_forms',
     'posts',
+    'comments',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
