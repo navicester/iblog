@@ -34,7 +34,15 @@ h1{
                 <div class="post-detail-item">{{instance.get_markdown}}</div>
 
                 <div class="">
-                    {{instance.comment_set.all}}
+                    <p>Comments</p>
+                    {% for comment in comments %}
+                    {{comment.content_object}}
+                    <div class="">
+                        {{comment.content}}
+                        <br/>
+                        via {{comment.user }} | {{comment.timestamp|timesince}} ago
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>        
