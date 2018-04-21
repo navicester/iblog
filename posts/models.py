@@ -9,7 +9,7 @@ from django.conf import settings
 from django.utils import timezone
 from markdown_deux import markdown
 from django.utils.safestring import mark_safe
-
+from django.contrib.contenttypes.models import ContentType
 
 def upload_location(instance, filename):
     return "%s/%s" % (instance.id, filename)
@@ -50,6 +50,18 @@ class Post(models.Model):
         markdown_content = markdown(content)
         return mark_safe(markdown_content)
 
+    @property
+    def comments(self):
+        instance = self
+        qs = Comment.objects.filter_by_instance(instance)
+        return qs
+
+    @property
+    def get_content_type(self):
+        instance = self
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        return content_type
+        
 def create_slug(instance, new_slug=None):
     slug = slugify(instance.title)
     if new_slug is not None:

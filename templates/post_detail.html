@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load urlify %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}{{instance.title}} | {{block.super}}{% endblock %}
 
@@ -35,6 +36,10 @@ h1{
 
                 <div class="">
                     <p>Comments</p>
+                    <form method="post" action="">{% csrf_token %}
+                        {{comment_form|crispy}}
+                        <input type="submit" value="Post Comments" class="btn btn-default">
+                    </form>
                     <hr>
                     {% for comment in comments %}
                     {{comment.content_object}}

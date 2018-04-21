@@ -10,9 +10,10 @@ from urllib import quote_plus
 
 from .models import Post
 from .forms import PostForm
+from comments.forms import CommentForm
 
 from comments.models import Comment
-
+from django.contrib.contenttypes.models import ContentType
 # Create your views here.
 def post_create(request):
     # return HttpResponse("<h1>Create</h1>")
@@ -48,11 +49,29 @@ def post_detail(request, slug=None):
 
     share_string = quote_plus(instance.content)
     comments = Comment.objects.filter_by_instance(instance)
+
+    initial_data = {
+        "content_type": instance.get_content_type,
+        "object_id":instance.id,
+    }
+    comment_form = CommentForm(request.POST or None, initial=initial_data)
+    if comment_form.is_valid():
+        c_type = comment_form.cleaned_data.get("content_type")
+        content_type = ContentType.objects.get(model=c_type)
+        obj_id = comment_form.cleaned_data.get('object_id')
+        content_data = comment_form.cleaned_data.get('content')
+        new_content, created = Comment.objects.get_or_create(
+            user=request.user,
+            content_type=content_type,
+            object_id=obj_id,
+            content=content_data)
+
     context = {
         "title" : instance.title,
         "instance" : instance,
         "share_string":share_string,
         "comments":comments,
+        "comment_form":comment_form,
 
     }
     return render(request, "post_detail.html",context)   

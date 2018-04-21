@@ -38,8 +38,3 @@ class Comment(models.Model):
     def __str__(self):
         return str(self.user.username)
 
-    @property
-    def comments(self):
-        instance = self
-        qs = Comment.objects.filter_by_instance(instance)
-        return qs
