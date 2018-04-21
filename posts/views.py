@@ -10,6 +10,7 @@ from urllib import quote_plus
 
 from .models import Post
 from .forms import PostForm
+from .utils import get_read_time
 from comments.forms import CommentForm
 
 from comments.models import Comment
@@ -49,6 +50,8 @@ def post_detail(request, slug=None):
 
     share_string = quote_plus(instance.content)
     comments = Comment.objects.filter_by_instance(instance)
+
+    print get_read_time(instance.get_markdown())
 
     initial_data = {
         "content_type": instance.get_content_type,
