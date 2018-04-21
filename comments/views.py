@@ -4,12 +4,27 @@ from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.contenttypes.models import ContentType
-
+from django.contrib import messages
 
 from .models import Comment
 from .forms import CommentForm
 
 # Create your views here.
+
+def comment_delete(request, id):
+    obj = get_object_or_404(Comment, id=id)
+    if request.method == "POST":
+        parent_obj_url = obj.content_object.get_absolute_url()
+        obj.delete()
+        messages.success(request, "This has been deleted")
+        return HttpResponseRedirect(parent_obj_url)
+    context = {
+        "object":obj,
+    }
+    return render(request, "confirm_delete.html", context)
+
+
+
 def comment_thread(request, id):
     obj = get_object_or_404(Comment, id=id)
     content_object = obj.content_object
