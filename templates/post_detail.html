@@ -22,6 +22,7 @@ h1{
         <img src="{{instance.image.url}}" class="img-responsive">
         {% endif %}
         <h1>{{title}} <small>{% if instance.draft%}<span style="color: red;">Draft</span>{% endif %} {{instance.publish}}</small></h1>
+        <p>Readtime : {% if instance.read_time < 1 %} < 1 minute {% else %}{{instance.read_time}} minutes{% endif %}</p>
         {% if instance.user.get_full_name %}
         <p>Autho: {{instance.user.get_full_name}}</p>
         {% endif %}
