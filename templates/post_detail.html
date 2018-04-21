@@ -35,13 +35,14 @@ h1{
 
                 <div class="">
                     <p>Comments</p>
+                    <hr>
                     {% for comment in comments %}
                     {{comment.content_object}}
-                    <div class="">
-                        {{comment.content}}
-                        <br/>
-                        via {{comment.user }} | {{comment.timestamp|timesince}} ago
-                    </div>
+                    <blockquote>
+                        <p>{{comment.content}}</p>
+                        <footer>via {{comment.user }} | {{comment.timestamp|timesince}} ago</footer>
+                    </blockquote>
+                    <hr>
                     {% endfor %}
                 </div>
             </div>
