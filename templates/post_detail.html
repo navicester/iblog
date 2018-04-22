@@ -37,10 +37,14 @@ h1{
 
                 <div class="">
                     <p>Comments</p>
+                    {% if request.user.is_authenticated %}
                     <form method="post" action="">{% csrf_token %}
                         {{comment_form|crispy}}
                         <input type="submit" value="Post Comments" class="btn btn-default">
                     </form>
+                    {% else %}
+                    <p>You must login to post comment </p>
+                    {% endif %}
                     <hr>
                     {% for comment in comments %}
                     {{comment.content_object}}
@@ -54,12 +58,16 @@ h1{
                                 <p>{{child_comment.content}}</p>
                                 <footer>via {{child_comment.user }} | {{child_comment.timestamp|timesince}} ago</footer>
                             </blockquote>
-                            {% endfor %}                   
+                            {% endfor %}
+                            {% if request.user.is_authenticated %}
                             <form method="post" action="">{% csrf_token %}
                                 {{comment_form|crispy}}
                                 <input type="hidden" name="parent_id" value="{{comment.id}}">
                                 <input type="submit" value="Post Comments" class="btn btn-default">
                             </form>
+                            {% else %}
+                            <p>You must login to comment </p>
+                            {% endif %}
                         </div>
                     </blockquote>               
                     <hr>
