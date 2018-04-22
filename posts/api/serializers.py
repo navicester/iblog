@@ -8,5 +8,19 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             "title",
             "slug",
-            "content"
+            "publish"
         ]
+
+"""
+data = {
+    "title" : "hi, there",
+    "slug": "new-content",
+    "publish": "2018-02-02"
+}
+
+new_item = PostSerializer(data=data)
+if new_item.is_valid():
+    new_item.save()
+else:
+    print new_item.errors
+"""
