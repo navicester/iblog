@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pagedown',
     'crispy_forms',
+    'rest_framework',
+
+    #
     'posts',
     'comments',
     'accounts',
