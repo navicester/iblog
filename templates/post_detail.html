@@ -5,6 +5,10 @@
 
 {% block head_title %}{{instance.title}} | {{block.super}}{% endblock %}
 
+{% block post_detail_link %}
+<li><a href="{{instance.get_absolute_url}}">{{instance.title}}</a></li>
+{% endblock %}
+
 <style type="text/css">
 {% block style %}
 h1{
