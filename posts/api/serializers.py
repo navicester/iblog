@@ -21,13 +21,18 @@ class PostDetailSerializer(serializers.ModelSerializer):
         ]
 
 """
+from posts.models import Post
+from posts.api.serializers import PostDetailSerializer
+
 data = {
     "title" : "hi, there",
-    "slug": "new-content",
+    "slug": "new-content-new",
     "publish": "2018-02-02"
 }
 
-new_item = PostSerializer(data=data)
+obj = Post.objects.get(id=3)
+new_item = PostDetailSerializer(obj, data=data)
+# new_item = PostSerializer(data=data)
 if new_item.is_valid():
     new_item.save()
 else:
