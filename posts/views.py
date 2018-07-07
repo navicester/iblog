@@ -48,7 +48,7 @@ def post_detail(request, slug=None):
         if not request.user.is_staff or not request.user.is_superuser:
             raise Http404
 
-    share_string = quote_plus(instance.content)
+    # share_string = quote_plus(instance.content)
     comments = Comment.objects.filter_by_instance(instance)
 
     initial_data = {
@@ -85,7 +85,7 @@ def post_detail(request, slug=None):
     context = {
         "title" : instance.title,
         "instance" : instance,
-        "share_string":share_string,
+        # "share_string":share_string,
         "comments":comments,
         "comment_form":comment_form,
 

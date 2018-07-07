@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^logout/', logout_view, name="logout"),
     url(r'^register/', register_view, name="register"),
     url(r'^api/posts/', include("posts.api.urls",namespace="posts-api")),
+    url(r'^tracking/', include('tracking.urls')),
+    url(r'^tracking2/', include('tracking2.urls')),
 ]
 
 if settings.DEBUG:
