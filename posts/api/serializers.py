@@ -18,7 +18,8 @@ class PostListSerializer(serializers.ModelSerializer):
         fields = [
             "title",
             "slug",
-            "publish"
+            "publish",
+            "user"
         ]
 
 class PostDetailSerializer(serializers.ModelSerializer):
