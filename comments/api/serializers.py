@@ -4,6 +4,9 @@ from rest_framework.serializers import HyperlinkedIdentityField, SerializerMetho
 from comments.models import Comment 
 
 class CommentSerializer(serializers.ModelSerializer):
+
+    reply_count = SerializerMethodField()
+
     class Meta:
         model = Comment
         fields = [
@@ -11,5 +14,47 @@ class CommentSerializer(serializers.ModelSerializer):
             "content_type",
             "object_id",
             "parent",
-            "content"
+            "content",
+            "reply_count"
         ]
+
+    def get_reply_count(self, obj):
+        if obj.is_parent:
+            return obj.children().count()
+        return 0
+
+class CommentChildSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = [
+            "id",
+            "content",
+            "timestamp",
+        ]
+
+class CommentDetailSerializer(serializers.ModelSerializer):
+
+    reply_count = SerializerMethodField()
+    replies = SerializerMethodField()
+
+    class Meta:
+        model = Comment
+        fields = [
+            "id",
+            "content_type",
+            "object_id",
+            "content",
+            "reply_count",
+            "replies",
+            "timestamp"
+        ]
+
+    def get_replies(self, obj):
+        if obj.is_parent:
+            return CommentChildSerializer(obj.children(), many=True).data
+        return None
+
+    def get_reply_count(self, obj):
+        if obj.is_parent:
+            return obj.children().count()
+        return 0        
