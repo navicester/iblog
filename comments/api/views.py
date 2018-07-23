@@ -29,18 +29,19 @@ from posts.api.pagination import PostLimitOffsetPagination, PostPageNumberPagina
 
 from comments.models import Comment 
 from comments.api.serializers import (
-    CommentSerializer, 
+    CommentListSerializer, 
     CommentDetailSerializer,
     # CommentEditSerializer,
     create_comment_serializer,
     )
 
 class CommentListAPIView(ListAPIView):
-    serializer_class = CommentSerializer
+    serializer_class = CommentListSerializer
 
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['content', 'user__first_name']
-    pagination_class = PostLimitOffsetPagination
+    # pagination_class = PostLimitOffsetPagination
+    pagination_class = PostPageNumberPagination
 
     def get_queryset(self, *args, **kwargs):
         # queryset_list = super(PostListAPIView, self).get_queryset(*args, **kwargs)
