@@ -6,6 +6,7 @@ from posts.models import Post
 from comments.api.serializers import CommentSerializer
 from comments.models import Comment 
 
+from accounts.api.serializers import UserDetailSerializer
 
 class PostCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,7 +31,9 @@ post_delete_url = HyperlinkedIdentityField(
 class PostListSerializer(serializers.ModelSerializer):
     url = post_detail_url
     delete_url = post_delete_url
-    user = SerializerMethodField()
+    # user = SerializerMethodField()
+    user = UserDetailSerializer(read_only=True)
+
     class Meta:
         model = Post
         fields = [
@@ -47,7 +50,8 @@ class PostListSerializer(serializers.ModelSerializer):
 
 class PostDetailSerializer(serializers.ModelSerializer):
     url = post_detail_url
-    user = SerializerMethodField()
+    # user = SerializerMethodField()
+    user = UserDetailSerializer(read_only=True)
     image = SerializerMethodField()
     html = SerializerMethodField()
     comments = SerializerMethodField()

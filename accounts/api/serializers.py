@@ -115,3 +115,13 @@ class UserLoginSerializer(ModelSerializer):
         data["token"] = "SOME RANDOM TOKEN"
 
         return data
+
+class UserDetailSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'email',
+            'first_name',
+            'last_name',
+        ]
