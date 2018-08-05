@@ -37,7 +37,7 @@ from comments.api.serializers import (
 
 class CommentListAPIView(ListAPIView):
     serializer_class = CommentListSerializer
-    permission_classes = [AllowAny]
+    # permission_classes = [AllowAny]
 
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['content', 'user__first_name']

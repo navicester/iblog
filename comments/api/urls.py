@@ -14,4 +14,5 @@ urlpatterns = [
     # url(r'^(?P<pk>\d+)/edit', CommentEditAPIView.as_view(), name="edit"), # delete
     url(r'^create/$', CommentCreateAPIView.as_view(), name='create'),    
     # url(r'^(?P<id>\d+)/delete$', comment_delete, name="delete"),   
+
 ]

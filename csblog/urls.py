@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
+from rest_framework_jwt.views import obtain_jwt_token
+
 from accounts.views import (login_view, register_view, logout_view)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -32,6 +34,7 @@ urlpatterns = [
     url(r'^api/comments/', include("comments.api.urls",namespace="comments-api")),
     url(r'^tracking/', include('tracking.urls')),
     url(r'^tracking2/', include('tracking2.urls')),
+    url(r'^api/auth/token/', obtain_jwt_token),    
 ]
 
 if settings.DEBUG:

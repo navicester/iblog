@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     # 'django.contrib.gis',
     'pagedown',
     'crispy_forms',
-    'rest_framework',    
+    'rest_framework',
+    # 'rest_framework.authtoken',
 
     'tracking',
     'tracking2',
@@ -166,12 +167,19 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PARSER_CLASSES': (
     #     'rest_framework.parsers.JSONParser',
     # )
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-         'rest_framework.authentication.SessionAuthentication',
-        #'rest_framework.authentication.BasicAuthentication'
+    "DEFAULT_AUTHENTICATION_CLASSES": (        
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication'
 
     ), 
     "DEFAULT_PERMISSION_CLASSES": (
-         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.IsAuthenticated',
     )    
+}
+
+import datetime
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3000),
 }
